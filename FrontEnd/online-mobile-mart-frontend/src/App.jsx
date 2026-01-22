@@ -5,12 +5,14 @@ import Navbar from "./components/Navbar";
 // public pages
 import Home from "./pages/user/Home";
 import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 import ProductDetails from "./pages/user/ProductDetails";
 import Unauthorized from "./pages/Unauthorized";
 
 // protected pages
 import MyOrders from "./pages/user/MyOrders";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import UserProfile from "./pages/user/UserProfile";
 
 // route guard
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -30,6 +32,7 @@ function App() {
         {/* ================= PUBLIC ROUTES ================= */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/product/:id" element={<ProductDetails />} />
 
         {/* ================= USER PROTECTED ================= */}
@@ -38,6 +41,14 @@ function App() {
           element={
             <ProtectedRoute role="USER">
               <MyOrders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute role="USER">
+              <UserProfile />
             </ProtectedRoute>
           }
         />

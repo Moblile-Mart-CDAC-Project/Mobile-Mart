@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "../../utils/axiosInstance";
+import { useNavigate, Link } from "react-router-dom";
+import axiosInstance from "../../utils/axiosInstance";
 import { toast } from "react-toastify";
 
 export default function Login() {
@@ -17,7 +17,7 @@ export default function Login() {
     }
 
     try {
-      const res = await axios.post("/auth/login", {
+      const res = await axiosInstance.post("/auth/login", {
         email,
         password
       });
@@ -64,6 +64,13 @@ export default function Login() {
       <button className="btn btn-primary w-100" onClick={login}>
         Login
       </button>
+
+      <div className="text-center mt-3">
+        <span className="text-muted">Don't have an account? </span>
+        <Link to="/register" className="text-decoration-none fw-bold" style={{ color: '#007bff' }}>
+          Create one
+        </Link>
+      </div>
    </div>
   );
 }
