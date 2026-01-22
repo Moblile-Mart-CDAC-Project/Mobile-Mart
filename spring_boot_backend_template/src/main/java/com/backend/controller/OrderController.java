@@ -26,12 +26,12 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    @PostMapping
+    @PostMapping("/place")
     public ResponseEntity<OrderDto> placeOrder() {
         return ResponseEntity.ok(orderService.placeOrder());
     }
 
-    @GetMapping
+    @GetMapping("/my")
     public ResponseEntity<List<OrderDto>> myOrders() {
         return ResponseEntity.ok(orderService.myOrders());
     }

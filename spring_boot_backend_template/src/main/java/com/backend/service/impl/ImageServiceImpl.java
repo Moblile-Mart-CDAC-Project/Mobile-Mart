@@ -24,17 +24,18 @@ import lombok.RequiredArgsConstructor;
 public class ImageServiceImpl implements ImageService {
 
     private static final String IMAGE_DIR =
-            "src/main/resources/static/images/products/";
+    		System.getProperty("user.dir") + "/uploads/images/products/";;
 
     private final ProductRepository productRepository;
     private final ProductImageRepository productImageRepository;
 
     // ===============================
-    // UPLOAD MULTIPLE IMAGES
+    // UPLOAD MULTIPLE IMAGEs
     // ===============================
     @Override
     public List<String> uploadProductImages(Long productId, MultipartFile[] files) {
-
+//    	System.out.println("IMAGE UPLOAD SERVICE CALLED");
+//    	System.out.println("IMAGE DIR = " + IMAGE_DIR);
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
@@ -45,8 +46,14 @@ public class ImageServiceImpl implements ImageService {
 
             for (MultipartFile file : files) {
 
-                String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-                Path filePath = Paths.get(IMAGE_DIR + fileName);
+//              String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            	 String extension =
+                         file.getOriginalFilename()
+                             .substring(file.getOriginalFilename().lastIndexOf("."));
+
+            	String fileName = UUID.randomUUID() + extension;
+            	//
+            	Path filePath = Paths.get(IMAGE_DIR + fileName);
 
                 Files.write(filePath, file.getBytes());
 

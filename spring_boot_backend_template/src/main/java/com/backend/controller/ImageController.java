@@ -12,7 +12,7 @@ import com.backend.service.ImageService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/admin/images")
+@RequestMapping("/api/admin/products")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
 public class ImageController {
@@ -20,7 +20,7 @@ public class ImageController {
     private final ImageService imageService;
 
     // upload 4–5 images
-    @PostMapping("/upload/{productId}")
+    @PostMapping("/{productId}/images")
     public ResponseEntity<List<String>> uploadImages(
             @PathVariable Long productId,
             @RequestParam("files") MultipartFile[] files) {

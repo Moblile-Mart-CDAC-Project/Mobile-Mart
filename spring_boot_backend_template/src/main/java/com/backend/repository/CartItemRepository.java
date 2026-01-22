@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.backend.entitys.Cart;
 import com.backend.entitys.CartItem;
@@ -15,6 +16,7 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
     Optional<CartItem> findByCartAndProduct(Cart cart, Product product);
 
+    @Transactional
     void deleteByCart(Cart cart);
 }
 
