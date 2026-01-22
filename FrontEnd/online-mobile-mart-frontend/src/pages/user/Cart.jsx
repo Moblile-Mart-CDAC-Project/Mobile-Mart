@@ -5,21 +5,17 @@ import { useNavigate } from "react-router-dom";
 
 function Cart() {
 
-  const [cart, setCart] = useState({
-    items: [],
-    totalAmount: 0
-  });
-
+  const [cart, setCart] = useState({ items: [], totalAmount: 0 });
   const navigate = useNavigate();
 
-  // ======================
+  // =====================
   // LOAD CART
-  // ======================
+  // =====================
   const loadCart = async () => {
     try {
       const res = await axios.get("/cart");
       setCart(res.data);
-    } catch (err) {
+    } catch {
       toast.error("Failed to load cart");
     }
   };
@@ -28,55 +24,59 @@ function Cart() {
     loadCart();
   }, []);
 
-  // ======================
+  // =====================
   // UPDATE QUANTITY
-  // ======================
-  const updateQuantity = async (productId, quantity) => {
-    if (quantity <= 0) return;
+  // =====================
+ const updateQty = async (productId, newQty) => {
+  if (newQty < 1) return;
 
-    try {
-      await axios.put("/cart/update", {
-        productId,
-        quantity
-      });
-      loadCart(); // refresh cart
-    } catch {
-      toast.error("Failed to update quantity");
-    }
-  };
+  try {
+    await axios.put("/cart/update", {
+      productId:productId,
+      quantity: newQty
+    });
+    loadCart(); // refresh cart
+  } catch {
+    toast.error("Failed to update quantity");
+  }
+};
 
-  // ======================
+
+  // =====================
   // REMOVE ITEM
-  // ======================
+  // =====================
   const removeItem = async (productId) => {
     try {
       await axios.delete(`/cart/remove/${productId}`);
-      loadCart(); // refresh cart
-      toast.success("Item removed");
+      loadCart();
     } catch {
       toast.error("Failed to remove item");
     }
   };
 
-  // ======================
+  // =====================
   // PLACE ORDER
-  // ======================
+  // =====================
   const placeOrder = async () => {
     try {
       await axios.post("/orders/place");
       toast.success("Order placed successfully");
-      navigate("/orders");
+      navigate("/order-success");
     } catch {
-      toast.error("Order failed");
+      toast.error("Failed to place order");
     }
   };
 
+  // =====================
+  // UI
+  // =====================
   return (
     <div className="container mt-4">
-      <h3>My Cart</h3>
+
+      <h3>Your Cart</h3>
 
       {cart.items.length === 0 ? (
-        <p>Your cart is empty</p>
+        <p>Cart is empty</p>
       ) : (
         <>
           <table className="table">
@@ -85,37 +85,34 @@ function Cart() {
                 <th>Product</th>
                 <th>Price</th>
                 <th>Qty</th>
-                <th>Subtotal</th>
+                <th>Total</th>
                 <th>Action</th>
               </tr>
             </thead>
 
             <tbody>
               {cart.items.map(item => (
-                <tr key={item.cartItemId}>
+                <tr key={item.productId}>
                   <td>{item.productName}</td>
                   <td>₹{item.price}</td>
-
                   <td>
-                    <button
-                      className="btn btn-sm btn-secondary me-1"
-                      onClick={() =>
-                        updateQuantity(item.productId, item.quantity - 1)
-                      }
-                    >-</button>
+                <button
+                     className="btn btn-sm btn-secondary me-1"
+                     onClick={() => updateQty(item.productId, item.quantity - 1)}
+                    >
+                    −   
+            </button>
 
-                    {item.quantity}
+            <span className="mx-2">{item.quantity}</span>
 
-                    <button
-                      className="btn btn-sm btn-secondary ms-1"
-                      onClick={() =>
-                        updateQuantity(item.productId, item.quantity + 1)
-                      }
-                    >+</button>
+            <button
+                 className="btn btn-sm btn-secondary ms-1"
+                 onClick={() => updateQty(item.productId, item.quantity + 1)}
+            >
+                +
+                </button>
                   </td>
-
                   <td>₹{item.price * item.quantity}</td>
-
                   <td>
                     <button
                       className="btn btn-sm btn-danger"
