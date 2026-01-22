@@ -80,8 +80,14 @@ export default function Register() {
         mobile: form.mobile
       });
 
-      toast.success("Registration successful");
-      navigate("/login");
+      toast.success("OTP sent to email and mobile. Verification required.");
+      navigate("/verify-otp", {
+        state: {
+          email: form.email,
+          mobile: form.mobile
+        }
+      });
+
 
     } catch (err) {
       toast.error(err.response?.data?.message || "Registration failed");
@@ -155,7 +161,7 @@ export default function Register() {
           </span>
         </div>
       </div>
-      
+
       <input
         className="form-control mb-3"
         placeholder="Mobile"

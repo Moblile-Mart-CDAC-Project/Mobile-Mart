@@ -22,6 +22,7 @@ import AdminOrderDetails from "./pages/admin/AdminOrderDetails";
 import AddProduct from "./pages/admin/AddProduct";
 import EditProduct from "./pages/admin/EditProduct";
 import Register from "./pages/auth/Register";
+import VerifyOtp from "./pages/auth/VerifyOtp";
 function App() {
   return (
     <>
@@ -32,6 +33,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/verify-otp" element={<VerifyOtp />} />
+
 
         <Route path="/product/:id" element={<ProductDetails />} />
 
