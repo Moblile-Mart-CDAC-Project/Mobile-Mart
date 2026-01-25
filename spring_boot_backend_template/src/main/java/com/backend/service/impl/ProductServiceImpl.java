@@ -17,6 +17,8 @@ import com.backend.repository.UserRepository;
 import com.backend.security.SecurityUtil;
 import com.backend.service.ProductService;
 
+import org.springframework.lang.NonNull;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -68,7 +70,7 @@ public class ProductServiceImpl implements ProductService {
     // ADMIN: UPDATE PRODUCT
     // =================================================
     @Override
-    public ProductDto updateProduct(Long productId, ProductUpdateDto dto) {
+    public ProductDto updateProduct(@NonNull Long productId, ProductUpdateDto dto) {
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -93,7 +95,7 @@ public class ProductServiceImpl implements ProductService {
     // ADMIN: DELETE PRODUCT
     // =================================================
     @Override
-    public void deleteProduct(Long productId) {
+    public void deleteProduct(@NonNull Long productId) {
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -105,9 +107,8 @@ public class ProductServiceImpl implements ProductService {
         }
 
         // delete images first (DB records)
-        productImageRepository.deleteAll(
-                productImageRepository.findByProduct(product)
-        );
+        var images = productImageRepository.findByProduct(product);
+        productImageRepository.deleteAll(images);
 
         productRepository.delete(product);
     }
@@ -146,7 +147,7 @@ public class ProductServiceImpl implements ProductService {
  // USER / PUBLIC: GET PRODUCT BY ID
  // =================================================
  @Override
- public ProductDto getProductById(Long productId) {
+ public ProductDto getProductById(@NonNull Long productId) {
 
      Product product = productRepository.findById(productId)
              .orElseThrow(() -> new RuntimeException("Product not found"));

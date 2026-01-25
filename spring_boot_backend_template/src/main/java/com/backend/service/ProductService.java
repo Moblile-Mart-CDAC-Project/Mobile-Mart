@@ -1,5 +1,7 @@
 package com.backend.service;
 
+import org.springframework.lang.NonNull;
+
 import java.util.List;
 
 import com.backend.dto.ProductCreateDto;
@@ -20,13 +22,13 @@ public interface ProductService {
 	
 	 // public / user
     List<ProductDto> getAllProducts();
-    ProductDto getProductById(Long productId);
+    ProductDto getProductById(@NonNull Long productId);
 
     // admin
     ProductDto addProduct(ProductCreateDto dto);
     List<ProductDto> getMyProducts();
-    ProductDto updateProduct(Long productId, ProductUpdateDto dto);
-    void deleteProduct(Long productId);
+    ProductDto updateProduct(@NonNull Long productId, ProductUpdateDto dto);
+    void deleteProduct(@NonNull Long productId);
 		   
 		
 

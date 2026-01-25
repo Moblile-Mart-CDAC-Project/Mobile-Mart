@@ -1,5 +1,7 @@
 package com.backend.controller;
 
+import org.springframework.lang.NonNull;
+
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,7 @@ public class ImageController {
     // upload 4–5 images
     @PostMapping("/{productId}/images")
     public ResponseEntity<List<String>> uploadImages(
-            @PathVariable Long productId,
+            @PathVariable @NonNull Long productId,
             @RequestParam("files") MultipartFile[] files) {
 
         return ResponseEntity.ok(
@@ -32,7 +34,7 @@ public class ImageController {
 
     // delete single image
     @DeleteMapping("/{imageId}")
-    public ResponseEntity<Void> deleteImage(@PathVariable Long imageId) {
+    public ResponseEntity<Void> deleteImage(@PathVariable @NonNull Long imageId) {
 
         imageService.deleteImage(imageId);
         return ResponseEntity.noContent().build();

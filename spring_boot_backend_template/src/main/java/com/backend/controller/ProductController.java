@@ -1,12 +1,13 @@
 package com.backend.controller;
 
+import org.springframework.lang.NonNull;
+
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.dto.ProductDto;
@@ -28,7 +29,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductDto> getProductById(
-            @PathVariable Long id) {
+            @PathVariable @NonNull Long id) {
         return ResponseEntity.ok(productService.getProductById(id));
     }
 

@@ -1,5 +1,7 @@
 package com.backend.service;
 
+import org.springframework.lang.NonNull;
+
 import com.backend.dto.AddToCartDto;
 import com.backend.dto.CartDto;
 
@@ -12,12 +14,12 @@ import com.backend.dto.CartDto;
 //}
 public interface CartService {
 
-    CartDto addToCart(AddToCartDto dto);
+    CartDto addToCart(@NonNull AddToCartDto dto);
 
     CartDto viewCart();
 
     void clearCart();
 
-	CartDto updateCart(AddToCartDto dto);
+	CartDto updateCart(@NonNull AddToCartDto dto);
 }
 

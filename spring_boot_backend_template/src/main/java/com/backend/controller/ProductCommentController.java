@@ -1,5 +1,7 @@
 package com.backend.controller;
 
+import org.springframework.lang.NonNull;
+
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -29,7 +31,7 @@ public class ProductCommentController {
     @PostMapping
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Void> addComment(
-            @PathVariable Long productId,
+            @PathVariable @NonNull Long productId,
             @Valid @RequestBody AddCommentDto dto) {
 
         commentService.addComment(productId, dto);
@@ -39,7 +41,7 @@ public class ProductCommentController {
     // PUBLIC: view comments
     @GetMapping
     public ResponseEntity<List<CommentResponseDto>> getComments(
-            @PathVariable Long productId) {
+            @PathVariable @NonNull Long productId) {
 
         return ResponseEntity.ok(commentService.getComments(productId));
     }

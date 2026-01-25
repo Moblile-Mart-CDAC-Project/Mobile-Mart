@@ -1,5 +1,7 @@
 package com.backend.controller;
 
+import org.springframework.lang.NonNull;
+
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -46,7 +48,7 @@ public class AdminProductController {
     // ===============================
     @PutMapping("/{productId}")
     public ResponseEntity<ProductDto> updateProduct(
-            @PathVariable Long productId,
+            @PathVariable @NonNull Long productId,
             @Valid @RequestBody ProductUpdateDto dto) {
 
         return ResponseEntity.ok(
@@ -59,7 +61,7 @@ public class AdminProductController {
     // ===============================
     @DeleteMapping("/{productId}")
     public ResponseEntity<Void> deleteProduct(
-            @PathVariable Long productId) {
+            @PathVariable @NonNull Long productId) {
 
         productService.deleteProduct(productId);
         return ResponseEntity.noContent().build();

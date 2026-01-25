@@ -19,6 +19,10 @@ import com.backend.repository.UserRepository;
 import com.backend.service.CartService;
 import com.backend.service.SecurityUtil;
 
+import org.springframework.lang.NonNull;
+
+import jakarta.persistence.EntityNotFoundException;
+
 import lombok.*;
 
 @Service
@@ -31,7 +35,8 @@ public class CartServiceImpl implements CartService {
     private final UserRepository userRepository;
 
     @Override
-    public CartDto addToCart(AddToCartDto dto) {
+    @SuppressWarnings("null")
+    public CartDto addToCart(@NonNull AddToCartDto dto) {
 
         User user = userRepository.findByEmail(
                 SecurityUtil.getCurrentUserEmail()
@@ -53,7 +58,7 @@ public class CartServiceImpl implements CartService {
 
 
         Product product = productRepository.findById(dto.getProductId())
-                .orElseThrow();
+                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
 
         CartItem cartItem = cartItemRepository
                 .findByCartAndProduct(cart, product)
@@ -110,7 +115,8 @@ public class CartServiceImpl implements CartService {
     
     @Override
     @Transactional   // 🔥 REQUIRED
-    public CartDto updateCart(AddToCartDto dto) {
+    @SuppressWarnings("null")
+    public CartDto updateCart(@NonNull AddToCartDto dto) {
 
         User user = userRepository.findByEmail(
                 SecurityUtil.getCurrentUserEmail()

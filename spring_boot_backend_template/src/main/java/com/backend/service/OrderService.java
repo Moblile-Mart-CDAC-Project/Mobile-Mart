@@ -1,5 +1,7 @@
 package com.backend.service;
 
+import org.springframework.lang.NonNull;
+
 import java.util.List;
 
 import com.backend.dto.OrderDetailsDto;
@@ -9,9 +11,9 @@ public interface OrderService {
 	//user
 		OrderDto placeOrder();
 	    List<OrderDto> myOrders();
-	    OrderDetailsDto orderDetails(Long orderId);
+	    OrderDetailsDto orderDetails(@NonNull Long orderId);
 	    
 	    // admin
 	    List<OrderDto> getAllOrders();
-	    OrderDetailsDto getOrderDetailsForAdmin(Long orderId);
+	    OrderDetailsDto getOrderDetailsForAdmin(@NonNull Long orderId);
 }

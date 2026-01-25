@@ -1,5 +1,7 @@
 package com.backend.controller;
 
+import org.springframework.lang.NonNull;
+
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -29,7 +31,7 @@ public class AdminOrderController {
     // view order details
     @GetMapping("/{orderId}")
     public ResponseEntity<OrderDetailsDto> getOrderDetails(
-            @PathVariable Long orderId) {
+            @PathVariable @NonNull Long orderId) {
 
         return ResponseEntity.ok(
                 orderService.getOrderDetailsForAdmin(orderId)

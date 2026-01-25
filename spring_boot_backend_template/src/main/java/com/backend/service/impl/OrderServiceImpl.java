@@ -14,18 +14,16 @@ import com.backend.entitys.CartItem;
 import com.backend.entitys.Order;
 import com.backend.entitys.OrderItem;
 import com.backend.entitys.OrderStatus;
-import com.backend.entitys.PaymentMode;
-import com.backend.entitys.PaymentStatus;
-import com.backend.entitys.Transaction;
 import com.backend.entitys.User;
 import com.backend.repository.CartItemRepository;
 import com.backend.repository.CartRepository;
 import com.backend.repository.OrderItemRepository;
 import com.backend.repository.OrderRepository;
-import com.backend.repository.TransactionRepository;
 import com.backend.repository.UserRepository;
 import com.backend.service.OrderService;
 import com.backend.service.SecurityUtil;
+
+import org.springframework.lang.NonNull;
 
 import lombok.RequiredArgsConstructor;
 
@@ -129,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
 //    }
     
     @Override
-    public OrderDetailsDto orderDetails(Long orderId) {
+    public OrderDetailsDto orderDetails(@NonNull Long orderId) {
 
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
@@ -173,7 +171,7 @@ public class OrderServiceImpl implements OrderService {
     }
     
     @Override
-    public OrderDetailsDto getOrderDetailsForAdmin(Long orderId) {
+    public OrderDetailsDto getOrderDetailsForAdmin(@NonNull Long orderId) {
 
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));

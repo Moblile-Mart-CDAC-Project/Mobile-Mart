@@ -17,6 +17,8 @@ import com.backend.repository.ProductImageRepository;
 import com.backend.repository.ProductRepository;
 import com.backend.service.ImageService;
 
+import org.springframework.lang.NonNull;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -33,7 +35,7 @@ public class ImageServiceImpl implements ImageService {
     // UPLOAD MULTIPLE IMAGEs
     // ===============================
     @Override
-    public List<String> uploadProductImages(Long productId, MultipartFile[] files) {
+    public List<String> uploadProductImages(@NonNull Long productId, MultipartFile[] files) {
 //    	System.out.println("IMAGE UPLOAD SERVICE CALLED");
 //    	System.out.println("IMAGE DIR = " + IMAGE_DIR);
         Product product = productRepository.findById(productId)
@@ -47,9 +49,11 @@ public class ImageServiceImpl implements ImageService {
             for (MultipartFile file : files) {
 
 //              String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-            	 String extension =
-                         file.getOriginalFilename()
-                             .substring(file.getOriginalFilename().lastIndexOf("."));
+            	 String originalFilename = file.getOriginalFilename();
+            	 if (originalFilename == null) {
+            	     throw new RuntimeException("File name is null");
+            	 }
+            	 String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
 
             	String fileName = UUID.randomUUID() + extension;
             	//
@@ -79,7 +83,7 @@ public class ImageServiceImpl implements ImageService {
     // DELETE IMAGE (EDIT PRODUCT CASE)
     // ===============================
     @Override
-    public void deleteImage(Long imageId) {
+    public void deleteImage(@NonNull Long imageId) {
 
         ProductImage image = productImageRepository.findById(imageId)
                 .orElseThrow(() -> new RuntimeException("Image not found"));

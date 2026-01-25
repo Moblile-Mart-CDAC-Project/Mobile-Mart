@@ -1,4 +1,9 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import axiosInstance from "../../utils/axiosInstance";
 import RegisterForm from "../../components/RegisterForm";
+
 
 export default function Register() {
   const navigate = useNavigate();
@@ -70,7 +75,7 @@ export default function Register() {
     }
 
     try {
-      await axios.post("/auth/register", {
+      await axiosInstance.post("/auth/register", {
         name: form.name,
         email: form.email,
         password: form.password,
@@ -180,5 +185,4 @@ export default function Register() {
     </div>
   );
 }
-  return <RegisterForm />;
-}
+

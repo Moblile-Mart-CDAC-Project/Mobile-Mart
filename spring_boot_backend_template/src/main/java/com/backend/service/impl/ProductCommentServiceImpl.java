@@ -15,6 +15,8 @@ import com.backend.repository.UserRepository;
 import com.backend.security.SecurityUtil;
 import com.backend.service.ProductCommentService;
 
+import org.springframework.lang.NonNull;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -27,7 +29,7 @@ public class ProductCommentServiceImpl
     private final UserRepository userRepository;
 
     @Override
-    public void addComment(Long productId, AddCommentDto dto) {
+    public void addComment(@NonNull Long productId, AddCommentDto dto) {
 
         User user = userRepository.findByEmail(
                 SecurityUtil.getCurrentUserEmail()
@@ -45,7 +47,7 @@ public class ProductCommentServiceImpl
     }
 
     @Override
-    public List<CommentResponseDto> getComments(Long productId) {
+    public List<CommentResponseDto> getComments(@NonNull Long productId) {
 
         return commentRepository
                 .findByProduct_ProductIdOrderByCreatedAtDesc(productId)
